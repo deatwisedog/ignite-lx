@@ -34,7 +34,7 @@ if [ -f "$IGX_BASE/$IGX_COMMON_INCL" ]; then
     . "$IGX_BASE/$IGX_COMMON_INCL"
     igx_setenv || exit 1
 else
-    echo 1>&2 "FATAL: Cannot found major ignite functions $IGX_BASE/$IGX_COMMON_INCL, ABORT!"
+    echo 1>&2 "FATAL: Cannot found major ignite functions $IGX_BASE/$IGX_COMMON_INCL, ABORT! Ignite-lx placed in /opt/ignite-lx ?"
     exit 1
 fi
 
