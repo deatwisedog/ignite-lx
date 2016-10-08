@@ -1,0 +1,88 @@
+#!/bin/sh
+
+echo "Loading, please wait..."
+
+[ -d /dev ]  || mkdir -m 0755 /dev
+[ -d /root ] || mkdir -m 0700 /root
+[ -d /sys ]  || mkdir /sys
+[ -d /proc ] || mkdir /proc
+[ -d /tmp ]  || mkdir /tmp
+
+mkdir -p /var/lock
+
+echo "Mounting sys filesystem"
+mount -t sysfs -o nodev,noexec,nosuid none /sys 
+
+echo "Mounting proc filesystem"
+mount -t proc -o nodev,noexec,nosuid none /proc 
+
+echo "Prepareing tmpfs mount for /dev"
+tmpfs_size="10M"
+if [ -e /etc/udev/udev.conf ]; then
+    echo "Reading udev configuration"
+	. /etc/udev/udev.conf
+fi
+
+echo "Mounting tmpfs on /dev for device creation"
+mount -t tmpfs -o size=$tmpfs_size,mode=0755 udev /dev
+> /dev/.initramfs-tools
+[ -d /dev/.initramfs ] || mkdir /dev/.initramfs
+
+
+echo "Creating essential devices in /dev direcetory"
+[ -e /dev/tty ]     || mknod -m 0640 /dev/tty c 5 0
+[ -e /dev/console ] || mknod -m 0640 /dev/console c 5 1
+[ -e /dev/null ]    || mknod -m 0666 /dev/null c 1 3
+[ -e /dev/zero ]    || mknod -m 0666 /dev/zero c 1 5
+[ -e /dev/mem ]     || mknod -m 0640 /dev/mem c 1 1
+
+if [ -e /proc/fb ]; then
+    while read fbno desc; do
+        if [ $(($fbno < 32)) ]; then
+            mknod -m 0640 /dev/fb${fbno} c 29 ${fbno}
+    fi
+    done < /proc/fb
+fi
+
+if [ ! -e /dev/fb0 ]; then
+    mknod -m 0640 /dev/fb0 c 29 0
+fi
+
+TERM="xterm-color"
+LANG="en_US.UTF-8"
+LC_COLLATE="en_US.UTF-8"
+LC_CTYPE="en_US.UTF-8"
+LC_MESSAGES="en_US.UTF-8"
+LC_MONETARY="en_US.UTF-8"
+LC_NUMERIC="en_US.UTF-8"
+LC_TIME="en_US.UTF-8"
+LC_ALL="en_US.UTF-8"
+    
+export TERM LANG LC_COLLATE LC_CTYPE LC_MESSAGES LC_MONETARY LC_NUMERIC LC_TIME LC_ALL
+
+OPTS="-u -C /dev/console"
+if [ -x /bin/kbd_mode ]; then
+    echo "Setting Keymode"
+    /bin/kbd_mode ${OPTS}
+fi
+
+if [ -x /bin/loadkeys -a -r /etc/boottime.kmap.gz ]; then
+    echo "Loading Keymaps"
+    loadkeys -q ${OPTS} /etc/boottime.kmap.gz
+fi
+
+if [ -x /bin/consolechars ]; then
+    echo "Setting up console font"
+    /bin/consolechars --verbose --tty=/dev/console --default-font --screen-font-map="/usr/share/consoletrans/cp850.sfm.gz" --app-charset-map="/usr/share/consoletrans/cp857.acm.gz"
+fi
+
+echo "Verifying modules dependencies"
+depmod -a
+
+echo "Creating recovery flag"
+touch /tmp/run_igx_resotre.tmp 
+
+echo "Starting Ignite-LX recovery Script"
+sleep 3
+clear
+/opt/ignite-lx/bin/restore/run_restore.sh
