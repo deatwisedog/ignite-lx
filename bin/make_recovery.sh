@@ -91,6 +91,7 @@ usage()
             x)
                 echo "$OPTARG" | grep -e "^/" > /dev/null
                 if [ $? -ne 0 ]; then
+
                     igx_stderr "ERROR: -x $OPTARG invalid, the path must be absolut!"
                     return 1
                 fi
@@ -154,7 +155,7 @@ usage()
         ;;
         
         *)
-            igx_stderr "Arch. $IGX_ARCH is not supported yet, ABORT!"
+            igx_stderr "Arch. $IGX_ARCH is not supported yet, ABORT! We sorry, but now supported only x86_64 architecture."
             return 20
         ;;
     esac
