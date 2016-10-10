@@ -123,7 +123,7 @@ usage()
                 igx_stderr "$IGX_VERSION"
                 igx_stderr "usage: make_recovery.sh [-dhvk -x <directory> -a <32/64> -b <backend>] -i <dev/vg>"
                 igx_stderr "-h print this screen"
-                igx_stderr "-a <32/64> force the usage of arch, default autodetected"
+                igx_stderr "-a <32/64> force the usage of arch, default autodetected. Now supported only 32 arch"
                 igx_stderr "-b <backend> define the backend to use for image creation (exp.: nfs)"
                 igx_stderr "-d enable script debug"
                 igx_stderr "-k include the current running kernel and modules in restore boot image"
