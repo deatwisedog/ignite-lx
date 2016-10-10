@@ -6,7 +6,10 @@ Ignite-LX (Linux disaster recovery)
 	Ignite-LX is a free disaster recovery script framework which
 	enables you to recovery a you Linux Box. This toolset is based
 	on the ideas from HP-UX Ignit-UX.
-	The latest version is available:
+	The latest version is available in GitHub repo:
+	https://github.com/deatwisedog/ignite-lx
+	
+	The official site:
 	http://ignite-lx.powercore.org
 
 
@@ -69,6 +72,7 @@ Ignite-LX (Linux disaster recovery)
 	Ignite-LX is just simple to run. For the end user finally only the run of
 	one script is required. This script is called "make_recovery.sh" and
 	is located in the "bin" directory of ignite-lx folder.
+	You can run "/opt/ignite-lx/./make-recovery -h" for getting all avaliable options.
 	Additional there are some autarky work/help scripts, located in directory bin/common.
 
 	Overview os scripts relevant files:
