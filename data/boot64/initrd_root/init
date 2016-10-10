@@ -66,9 +66,9 @@ if [ -x /bin/kbd_mode ]; then
     /bin/kbd_mode ${OPTS}
 fi
 
-if [ -x /bin/loadkeys -a -r /etc/boottime.kmap.gz ]; then
+if [ -x /bin/loadkeys -a -r /etc/boottime_us.kmap.gz ]; then
     echo "Loading Keymaps"
-    loadkeys -q ${OPTS} /etc/boottime.kmap.gz
+    loadkeys -q ${OPTS} /etc/boottime_us.kmap.gz
 fi
 
 if [ -x /bin/consolechars ]; then
