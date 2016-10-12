@@ -4,7 +4,7 @@ Ignite-LX (Linux disaster recovery)
 1.) What is Ignite-LX
 
 	Ignite-LX is a free disaster recovery script framework which
-	enables you to recovery a you Linux Box. This toolset is based
+	allows you to recovery a you Linux Box. This toolset is based
 	on the ideas from HP-UX Ignit-UX.
 	The latest version is available in GitHub repo:
 	https://github.com/deatwisedog/ignite-lx
