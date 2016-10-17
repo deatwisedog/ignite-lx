@@ -19,6 +19,7 @@ Ignite-LX (Linux disaster recovery)
 
 	ip (iproute)
 	genisoimage
+	host (In RedHat-based distributives included in "bind-utils" package)
 
 
 
