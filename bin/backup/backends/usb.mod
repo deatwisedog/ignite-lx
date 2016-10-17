@@ -46,7 +46,9 @@ igx_backup_backend_bind()
         return 1
     fi
     
-    mount 2>&1 -t vfat "$IGX_USB_PATH" "$IGX_USB_MOUNTPOINT"
+#    mount 2>&1 -t vfat "$IGX_USB_PATH" "$IGX_USB_MOUNTPOINT"
+	mount 2>&1 "$IGX_USB_PATH" "$IGX_USB_MOUNTPOINT"
+
     if [ $? -ne 0 ]; then
         igx_log "ERROR: Cannot mount archive directory $IGX_USB_PATH, ABORT! Check that you selected right FS type on your usb-stick!"
         return 2
